@@ -15,11 +15,10 @@ botaoJogarNovamente.addEventListener("click", jogaNovamente);
 mostraPergunta();
 
 function jogaNovamente() {
-    atual = 0;
-    historiaFinal = "";
-    textoResultado.textContent = "";
-    caixaResultado.classList.remove("mostrar");
-    mostraPergunta();
+atual = 0;
+historiaFinal = "";
+caixaResultado.classList.remove("mostrar");
+mostraPergunta();
 }
 
 function mostraPergunta() {
@@ -50,8 +49,8 @@ function respostaSelecionada(opcaoSelecionada) {
 }
 
 function mostraResultado() {
-    caixaPerguntas.textContent = "Em 2049...";
-    textoResultado.textContent = historiaFinal.trim();
-    caixaAlternativas.textContent = "";
-    caixaResultado.classList.add("mostrar");
+caixaPerguntas.textContent = "Em 2049...";
+textoResultado.textContent = historiaFinal;
+caixaAlternativas.textContent = "";
+caixaResultado.classList.add("mostrar"); botaoJogarNovamente.addEventListener("click", jogaNovamente);
 }
