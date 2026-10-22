@@ -1,4 +1,4 @@
-import { aleatorio } from "./js/aleatorio.js";
+import { aleatorio, nome } from "./js/aleatorio.js";
 import { perguntas } from "./js/perguntas.js";
 
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
@@ -12,14 +12,8 @@ let perguntaAtual;
 let historiaFinal = "";
 
 botaoJogarNovamente.addEventListener("click", jogaNovamente);
+substituiNome();
 mostraPergunta();
-
-function jogaNovamente() {
-atual = 0;
-historiaFinal = "";
-caixaResultado.classList.remove("mostrar");
-mostraPergunta();
-}
 
 function mostraPergunta() {
     if (atual >= perguntas.length) {
@@ -42,15 +36,37 @@ function mostraAlternativas() {
     }
 }
 
-function respostaSelecionada(opcaoSelecionada) {
-    historiaFinal += `${aleatorio(opcaoSelecionada.afirmacao)} `;
-    atual++;
+
+
+function respostaSelecionada(opcaoSelecionada) { 
+  const afirmacoes = aleatorio(opcaoSelecionada.afirmacao); 
+  historiaFinal += afirmacoes + " "; 
+  if (opcaoSelecionada.proxima !== undefined) { 
+    atual = opcaoSelecionada.proxima; 
+  } else { 
+    mostraResultado(); 
+    return; 
+  } 
+  mostraPergunta(); 
+} 
+
+function mostraResultado() {
+    caixaPerguntas.textContent = `Em 2049, ${nome}`;
+    textoResultado.textContent = historiaFinal.trim();
+    caixaAlternativas.textContent = "";
+    caixaResultado.classList.add("mostrar");
+}
+
+function jogaNovamente() {
+    atual = 0;
+    historiaFinal = "";
+    textoResultado.textContent = "";
+    caixaResultado.classList.remove("mostrar");
     mostraPergunta();
 }
 
-function mostraResultado() {
-caixaPerguntas.textContent = "Em 2049...";
-textoResultado.textContent = historiaFinal;
-caixaAlternativas.textContent = "";
-caixaResultado.classList.add("mostrar"); botaoJogarNovamente.addEventListener("click", jogaNovamente);
+function substituiNome() {
+    for (const pergunta of perguntas) {
+        pergunta.enunciado = pergunta.enunciado.replace(/você/gi, nome);
+    }
 }
